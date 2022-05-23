@@ -15,11 +15,11 @@ PRIVATE_KEY : 본인의 클레이튼 PRIVATE_KEY
 
 init : 초기화 함수. 세션스토리지에 로그인이력이 있으면, 해당 정보로 로그인
 
-auth 
-    accessType: 'keystore' or 'privateKey',  
-    keystore: '', // accessType이 keystore일때 사용할 키스토어 파일의 위치  
-    password: '', // accessType이 keystore일때 사용할 비밀번호  
-    wallet_address: '' // 로그인된 지갑주소 (나중에 스마트컨트랙트에서, get~~ 함수들을 호출할때, caller 파라미터에 넘겨줄 값)  
+auth   
+    - accessType: 'keystore' or 'privateKey',  
+    - keystore: '', // accessType이 keystore일때 사용할 키스토어 파일의 위치  
+    - password: '', // accessType이 keystore일때 사용할 비밀번호  
+    - wallet_address: '' // 로그인된 지갑주소 (나중에 스마트컨트랙트에서, - get~~ 함수들을 호출할때, caller 파라미터에 넘겨줄 값)  
 
 handleLogin : 로그인 함수 ( 키스토어 방식과 private_key 방식 두가지가 존재.)
 handleLogout : 로그아웃 함수
@@ -47,27 +47,29 @@ agCotract.methods.명령어(parmaeters.....).send({from : Session.auth.wallet_ad
 
 --------------------------------------------------------------------------------------------------
 # 블록체인 event 종류
-event addReservEvent()
+event addReservEvent()  
     - 요청목록페이지에서 나중에 쓸 이벤트입니다. 새로운 예약이 블록체인에 등록될때, 발생됩니다.
 
-event checkInTaxiEvent(address indexed addr);
+event checkInTaxiEvent(address indexed addr);  
     - 택시탑승 이벤트입니다.
 
-event checkOutTaxiEvent(address indexed addr);
+event checkOutTaxiEvent(address indexed addr);     
     - 택시도착 이벤트입니다.
 
-event cancelLastReservEvent(address indexed addr);
+event cancelLastReservEvent(address indexed addr);  
     - 예약 취소 이벤트입니다.
 
-event payCompleteEvent(address indexed addr);
+event payCompleteEvent(address indexed addr);  
     - 결제 완료 이벤트입니다.
 
 --------------------------------------------------------------------------------------------------
 # 콜백 설정시, once, on.
 
-once : 단 한번 콜백함수를 호출합니다. event A 발생 -> 콜백호출.   다음에 event A 발생 -> 콜백 호출 X (종료)
+once : 단 한번 콜백함수를 호출합니다.  
+ event A 발생 -> 콜백호출.   다음에 event A 발생 -> 콜백 호출 X (종료)
 
-on : 같은 이벤트에 대해서 계속 호출합니다. event A 발생 -> 콜백호출.   다음에 event A 발생 -> 콜백 호출.
+on : 같은 이벤트에 대해서 계속 호출합니다.  
+ event A 발생 -> 콜백호출.   다음에 event A 발생 -> 콜백 호출.
 
 --------------------------------------------------------------------------------------
 # 가스비
