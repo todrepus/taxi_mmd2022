@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요청목록페이지</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/call.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrapper border_box" style="width:700px;">
+            <button onclick='const call=fetch(); append_call(call);'>테스트 버튼</button>
+            <ul class="content center" id='calls'>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
