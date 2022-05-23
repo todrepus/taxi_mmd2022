@@ -112,15 +112,7 @@ const Session = {
     sessionStorage.removeItem("walletInstance");
     this.reset();
   },
-  update: async function(){
-    console.log(agContract);
-    const user = await agContract.methods.getUser(this.auth.wallet_address).call();
-  },
-  update2: async function(){
-    console.log(agContract);
-    const user = await agContract.methods.addUser('010-3252-8760', '강현우').send({from:this.auth.wallet_address, gas : '250000'});
-    console.log(user);
-  }
+
 };
 
 
