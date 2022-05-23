@@ -1,5 +1,6 @@
 # TAXI_MMD2022
-Klaytn javascript native boilerplate
+멀미설 프로젝트
+
 -------------------------------------------------------------------
 # settings.js
 설정값을 담고있는 js 파일입니다.
