@@ -39,10 +39,12 @@ set : add ~~ 혹은 set ~~ 으로 정의되어있거나, checkIn/checkOut 같이
 get함수에서는 호출하는 자신이 누구인지 밝혀야할 필요가 있어서, 지갑주소를 항상 넘겨줘야 합니다.
 set함수에서는 send()를 이용하여 보내기때문에, 자신이 누구인지 밝혀져 있습니다.(msg.sender 존재) 그래서 지갑주소를 따로 넘겨줄 필요가 없습니다.
 
-[get 관련 함수 사용법]
+[get 관련 함수 사용법]  
+
 agContract.methods.명령어(Session.auth.wallet_address).call()
 
-[set 관련 함수 사용법]
+[set 관련 함수 사용법]  
+
 agCotract.methods.명령어(parmaeters.....).send({from : Session.auth.wallet_address, gas:'200000'})  // 20만가스까지 제한둠.
 
 --------------------------------------------------------------------------------------------------
