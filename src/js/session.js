@@ -102,8 +102,10 @@ const Session = {
 
   reset: function () {
     this.auth = {
+      accessType: 'keystore',
       keystore: '',
-      password: ''
+      password: '',
+      wallet_address : ''
     };
   },
 
