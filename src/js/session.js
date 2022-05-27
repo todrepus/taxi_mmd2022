@@ -122,7 +122,8 @@ const Session = {
 
 window.Session = Session;
 
-window.addEventListener("load", async function () {
+window.addEventListener ('DOMContentLoaded', async function () {
+  console.log('z');
   await Session.init();
 });
 

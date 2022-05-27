@@ -49,7 +49,7 @@ export const Reserv = {
             alert('Error');
             return;
         }
-        document.getElementById('content_reserv').innerHTML = "운행중......";
+        this.process();
     },
     checkOutTaxiEventCallback : async function(){
         const success = await this.update();
@@ -59,7 +59,7 @@ export const Reserv = {
         }
 
         alert('도착!')
-        location.href('payment_complete.html')
+        this.process();
     },
 
     addCallback : function(){
@@ -77,6 +77,22 @@ export const Reserv = {
             Reserv.checkOutTaxiEventCallback();
         })
         console.log('callback is added');
+    },
+
+    process : function(){
+        if (this.data.pay_completed){ // 결제가 모두 완료된경우
+            alert('예약이 끝에 도달함');
+            
+        }
+        else if (this.data.end != 0){ // 도착완료
+            alert('도착완료')
+            location.href = 'payment_complete.html';
+        }else if (this.data.start != 0){ // 운행중 (체크인)
+            document.getElementById('content_reserv').innerHTML = "운행중......";
+        }else if (this.data.cancelled){ // 취소인경우
+            alert('취소')
+            location.href = 'payment_cancel.html'
+        }
     }
 }
 
