@@ -6,17 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약완료페이지</title>
     <link rel="stylesheet" href="css/style.css">
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/reserv.js"></script>
 
     <!--- 예약 성공적으로 되었는지 점검 --->
     <script>
         window.onload = ()=> {
-            const juso_points = sessionStorage.getItem('juso_points');
-            if (juso_points){
-                console.log(juso_points);
-            }else{
-                console.log('z');
-                location.href('예약.html');
-            }
         }
     </script>
 </head>

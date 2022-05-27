@@ -16,14 +16,14 @@ export const Reserv = {
         const result = await agContract.methods.getLastReservation(Session.auth.wallet_address).call();
         try{
             console.log(result);
-            this.occur = result.occur;
-            this.start = result.start;
-            this.end = result.end;
-            this.paid = result.paid;
-            this.pay_completed = result.pay_completed;
-            this.cancelled = result.cancelled;
-            this.start_point = result.start_point;
-            this.dest_point = result.dest_point;
+            this.data.occur = result.occur;
+            this.data.start = result.start;
+            this.data.end = result.end;
+            this.data.paid = result.paid;
+            this.data.pay_completed = result.pay_completed;
+            this.data.cancelled = result.cancelled;
+            this.data.start_point = result.start_point;
+            this.data.dest_point = result.dest_point;
         }catch (error){
             return false;
         }
