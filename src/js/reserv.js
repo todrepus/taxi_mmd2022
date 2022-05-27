@@ -41,6 +41,42 @@ export const Reserv = {
             console.log(error);
             return false;
         }
+    },
+
+    checkInTaxiEventCallback : async function(){
+        const success = await this.update();
+        if (!success){
+            alert('Error');
+            return;
+        }
+        document.getElementById('content_reserv').innerHTML = "운행중......";
+    },
+    checkOutTaxiEventCallback : async function(){
+        const success = await this.update();
+        if (!success){
+            alert('Error');
+            return;
+        }
+
+        alert('도착!')
+        location.href('payment_complete.html')
+    },
+
+    addCallback : function(){
+        agContract.events.checkInTaxiEvent({filter:{
+            addr: Session.auth.wallet_address
+        }}).on('data', function(event){
+            console.log('택시 출발체크인')
+            console.log(event);
+            Reserv.checkInTaxiEventCallback();
+        })
+        agContract.events.checkOutTaxiEvent({filter:{
+            addr: Session.auth.wallet_address
+        }}).on('data', function(event){
+            console.log('택시 도착 체크아웃')
+            Reserv.checkOutTaxiEventCallback();
+        })
+        console.log('callback is added');
     }
 }
 
@@ -54,17 +90,7 @@ export const Reserv = {
 
 // 5. 콜백 등록
 
-agContract.events.checkInTaxiEvent({filter:{
-    addr: Session.auth.wallet_address
-}}).once('data', function(event){
-    console.log('택시 출발체크인')
-})
 
-agContract.events.checkOutTaxiEvent({filter:{
-    addr: Session.auth.wallet_address
-}}).once('data', function(event){
-    console.log('택시 도착 체크아웃')
-})
 
 
 window.Reserv = Reserv;

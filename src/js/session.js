@@ -122,8 +122,8 @@ const Session = {
 
 window.Session = Session;
 
-window.addEventListener("load", function () {
-  Session.init();
+window.addEventListener("load", async function () {
+  await Session.init();
 });
 
 var opts = {
