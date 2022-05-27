@@ -1,11 +1,24 @@
 import { REST_API_KEY } from './settings.js';
+import {Session, agContract} from './session.js';
+import {Reserv} from './reserv.js';
 
 
 const MapHelper = {
     juso_arr : [],
     points : ['', ''], // 출발지, 목적지
     now_target_pos : 0,
-    //1. 주소검색 처리 함수 ( 출발지 목적지에 넣어주기 위함)
+
+    init: function(){
+        const juso_points = sessionStorage.getItem('juso_points');
+        console.log(juso_points);
+        if (juso_points){
+            const point_map = JSON.parse(juso_points);
+            this.points[0] = point_map.sp;
+            this.points[1] = point_map.dp;
+        }
+
+        this.updateInputs();
+    },
     search: async function(juso) {
         let url = 'https://dapi.kakao.com/v2/local/search/address.json';
         const analyze_type = 'similar';
@@ -62,6 +75,28 @@ const MapHelper = {
 
         sp.value = this.points[0];
         dp.value = this.points[1];
+    },
+
+    completeReserv: async function (){
+        if (this.points[0] === ''){
+            alert('출발지를 입력해주세요.');
+            return;
+        }
+        if (this.points[1] === ''){
+            alert('목적지를 입력해주세요.');
+            return;
+        }
+
+        const juso_points = {
+            sp: this.points[0],
+            dp: this.points[1]
+        };
+        
+        sessionStorage.setItem('juso_points', JSON.stringify(juso_points));
+        
+        const success = await Reserv.push(this.points[0], this.points[1]);
+        if (success)
+            location.href = '예약완료.html';
     }
 }
 
@@ -91,4 +126,6 @@ window.onload = () =>{
 
 
     });
+
+    MapHelper.init();
 }
