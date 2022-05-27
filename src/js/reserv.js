@@ -13,6 +13,22 @@ export const Reserv = {
         dest_point : ''
     },
     update: async function(){ // 예약정보 업데이트
+        const result = await agContract.methods.getLastReservation(Session.auth.wallet_address).call();
+        try{
+            console.log(result);
+            this.occur = result.occur;
+            this.start = result.start;
+            this.end = result.end;
+            this.paid = result.paid;
+            this.pay_completed = result.pay_completed;
+            this.cancelled = result.cancelled;
+            this.start_point = result.start_point;
+            this.dest_point = result.dest_point;
+        }catch (error){
+            return false;
+        }
+        console.log(this);
+        return true;
 
     },
     // 2. 예약하기 (출발지, 목적지)
@@ -50,3 +66,5 @@ agContract.events.checkOutTaxiEvent({filter:{
     console.log('택시 도착 체크아웃')
 })
 
+
+window.Reserv = Reserv;

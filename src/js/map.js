@@ -128,4 +128,24 @@ window.onload = () =>{
     });
 
     MapHelper.init();
+
+    (async() => {
+        let can_reserv = true;
+        try{
+            const result = await agContract.methods.getLastReservation(Session.auth.wallet_address).call();
+            console.log(result);
+            if (result.cancelled || result.pay_completed){
+            }else{
+                can_reserv = false;
+            }
+        }catch (error){
+
+        }
+
+        if (!can_reserv){
+            location.href = "예약완료.html";
+        }
+        const btn = document.getElementById('reservBtn');
+        btn.disabled = false;
+    })();
 }
