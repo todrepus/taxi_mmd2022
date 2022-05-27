@@ -6,15 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약완료 페이지</title>
     <link rel="stylesheet" href="css/style.css">
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/reserv.js"></script>
     <title>Payment_complete</title>
+
+    <!--- 예약정보 업데이트 --->
+    <script>
+      window.addEventListener('load', async ()=> {
+          console.log('d');
+          const success = await Reserv.update();
+          if (success == false){
+              alert('예약정보 불러오기 실패.');
+              return;
+          }
+
+          const start_date = new Date(Reserv.data.start * 1000);
+          const end_date = new Date(Reserv.data.end * 1000);
+          const f = function(date){
+            return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분 ${date.getSeconds()}초`;
+          }
+          console.log(Reserv.data.start);
+          console.log(start_date);
+          document.getElementById('start_time').innerHTML = f(start_date);
+          document.getElementById('end_time').innerHTML = f(end_date);
+          document.getElementById('paid').innerHTML = Reserv.data.paid + "원";
+          
+      });
+  </script>
   </head>
   <body>
     <div class="outbox">
         <div class="box">
             <div class="content">
-                <p>탑승시간: <span style="text-decoration: underline;">1시 10분</span></p>
-                <p>하차시간: <span style="text-decoration: underline;">2시 05분</span></p>
-                <p>요금: <span style ="text-decoration: underline;">20000원</span></p>
+                <p>탑승시간: <span style="text-decoration: underline;" id='start_time'>1시 10분</span></p>
+                <p>하차시간: <span style="text-decoration: underline;" id='end_time'>2시 05분</span></p>
+                <p>요금: <span style ="text-decoration: underline;" id='paid'>20000원</span></p>
             </div>
             <div class="payment">
                 <button>결제하기</button>
