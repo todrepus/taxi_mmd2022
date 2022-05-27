@@ -11,7 +11,15 @@
 
     <!--- 예약 성공적으로 되었는지 점검 --->
     <script>
-        window.onload = ()=> {
+        window.onload = async()=> {
+            await Session.init();
+            const success = await Reserv.update();
+            if (success == false){
+                alert('예약정보 불러오기 실패.');
+                return;
+            }
+            document.getElementById('start_point').innerHTML = Reserv.data.start_point;
+            document.getElementById('dest_point').innerHTML = Reserv.data.dest_point;
         }
     </script>
 </head>

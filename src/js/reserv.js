@@ -13,8 +13,8 @@ export const Reserv = {
         dest_point : ''
     },
     update: async function(){ // 예약정보 업데이트
-        const result = await agContract.methods.getLastReservation(Session.auth.wallet_address).call();
         try{
+            const result = await agContract.methods.getLastReservation(Session.auth.wallet_address).call();
             console.log(result);
             this.data.occur = result.occur;
             this.data.start = result.start;
