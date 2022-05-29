@@ -1,4 +1,5 @@
 import {agContract, Session} from './session.js';
+import {MAX_ELAPSED_SEC} from './settings.js';
 
 // 1. 예약정보 저장할 공간
 export const Reserv = {
@@ -34,7 +35,7 @@ export const Reserv = {
     // 2. 예약하기 (출발지, 목적지)
     push: async function(sp, dp){
         try{
-            const result = await agContract.methods.addReserv(sp, dp).send({from : Session.auth.wallet_address, gas:'2000000'});
+            const result = await agContract.methods.addReserv(sp, dp).send({from : Session.auth.wallet_address, gas:'500000'});
             console.log(result);
             return true;
         }catch (error){
@@ -80,6 +81,9 @@ export const Reserv = {
     },
 
     process : function(){
+        if (!success){
+            return;
+        }
         if (this.data.pay_completed){ // 결제가 모두 완료된경우
             alert('예약이 끝에 도달함');
             
@@ -92,6 +96,37 @@ export const Reserv = {
         }else if (this.data.cancelled){ // 취소인경우
             alert('취소')
             location.href = 'payment_cancel.html'
+        }
+    },
+
+    cancel: async function() {
+        const success = await this.update();
+        if (!success){
+            alert('정보 불러오기 실패');
+            return;
+        }
+
+        if (this.data.start != 0){
+            alert('출발 이후엔 취소 불가능합니다.');
+            return;
+        }
+
+        const now = new Date().getTime(); // 현재timestamp 
+        const elapsedSec = (now  - (this.data.start*1000)) / (1000); // 몇초 지났는가
+        if (elapsedSec > MAX_ELAPSED_SEC){ // 일정시간이상 지나면, 취소를 못하도록한다. ( 택시기사 보호차원 )
+            alert(`${MAX_ELAPSED_SEC/60}분 이후에는 취소가 불가능합니다.`);
+            return;
+        }
+
+        try{
+            const transaction = await agContract.methods.cancelLastReserv().send({from : Session.auth.wallet_address, gas:'500000'});
+            console.log(transcation);
+            alert('취소하였습니다.')
+            await this.update();
+            this.process();
+        }catch (error){
+            alert('취소에 실패했습니다.')
+            
         }
     }
 }
