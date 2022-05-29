@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script type='module' src="js/session.js"></script>
     <script type='module' src="js/reserv.js"></script>
+    <script type='module' src="js/payment.js"></script>
     <title>Payment_complete</title>
 
     <!--- 예약정보 업데이트 --->
@@ -43,7 +44,7 @@
                 <p>요금: <span style ="text-decoration: underline;" id='paid'></span></p>
             </div>
             <div class="payment">
-                <button>결제하기</button>
+                <button onclick='Payment.Pay();'>결제하기</button>
             </div>
         </div>
     </div>

@@ -4,7 +4,10 @@ import {Reserv} from './reserv.js';
 
 
 const Payment = {
+    Pay_Working : false,
     Pay : async function(){
+        if (this.Pay_Working) // 결제 연타 방지
+            return;
         const paid = Reserv.data.paid;
         const result = await PayAPI(paid);
         if (!result){
@@ -16,6 +19,8 @@ const Payment = {
             alert('결제에 성공하였습니다.');
             location.href = 'Payment-Complete.html';
         }
+
+        this.Pay_Working = true;
     },
     PayAPI : async function(paid){
         
