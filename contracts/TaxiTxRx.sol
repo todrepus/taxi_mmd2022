@@ -9,7 +9,7 @@ contract TaxiTxRx {
         uint occur; // 예약 발생시간 (timestamp)
         uint start; // 탑승 시작시간
         uint end; // 거래 완료시간
-        uint8 paid; // 비용
+        uint16 paid; // 비용
         bool pay_completed; // 결제완료여부
         bool cancelled; // 취소여부
         string start_point; // 출발지
@@ -96,7 +96,7 @@ contract TaxiTxRx {
     }
 
     // 하차시간 등록 및 결제요금 추가
-    function checkOutTaxi(uint8 paid) public {
+    function checkOutTaxi(uint16 paid) public {
         require(users[msg.sender].created == true && user_reservs[msg.sender].length > 0);
         Reservation storage last = _getLastReservation(msg.sender);
         last.end = block.timestamp; // 현재시간
@@ -109,6 +109,7 @@ contract TaxiTxRx {
         require(users[msg.sender].created == true && _getLastReservation(msg.sender).start == 0);
         Reservation storage last = _getLastReservation(msg.sender);
         last.cancelled = true;
+        last.paid = 1000; // 예약금.
         emit cancelLastReservEvent(last.target);
     }
 
