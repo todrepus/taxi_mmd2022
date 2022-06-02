@@ -59,10 +59,12 @@ const Session = {
   },
 
   handleLogin: async function () {
+    let login = false;
     if (this.auth.accessType === 'keystore') {
       try {
         const privateKey = cav.klay.accounts.decrypt(this.auth.keystore, this.auth.password).privateKey;
         this.integrateWallet(privateKey);
+        login = true;
       } catch (event){
         console.log(event);
         alert('비밀번호가 일치하지 않습니다.');
@@ -71,20 +73,24 @@ const Session = {
       try{
         console.log(Setting.PRIVATE_KEY);
         this.integrateWallet(Setting.PRIVATE_KEY);
-        alert('LOGIN');
+        login = true;
       } catch (event) {
         console.log(event);
         alert('잘못된 PRIVATE_KEY 입니다.');
       }
     }
-    
+    if (login){
+      location.reload();
+    }
   },
 
   handleLogout: async function () {
     this.removeWallet();
     location.reload();
   },
-
+  handlePassword: async function (event) {
+    this.auth.password = event.target.value;
+  },
   integrateWallet: function (privateKey) {
     const walletInstance = cav.klay.accounts.privateKeyToAccount(privateKey);
     walletInstance.address = caver.utils.toChecksumAddress(walletInstance.address);
@@ -114,7 +120,15 @@ const Session = {
     sessionStorage.removeItem("walletInstance");
     this.reset();
   },
+  checkValidKeystore: function (keystore) {
+    const parsedKeystore = JSON.parse(keystore);
+    const isValidKeystore = parsedKeystore.version && 
+      parsedKeystore.id &&
+      parsedKeystore.address &&
+      parsedKeystore.keyring;
 
+    return isValidKeystore;
+  },
 };
 
 
