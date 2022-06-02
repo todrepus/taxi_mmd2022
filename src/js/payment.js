@@ -23,8 +23,27 @@ const Payment = {
         this.Pay_Working = true;
     },
     PayAPI : async function(paid){
-        
         return true; // 나중에 결제 api를 통해 실패하면 false를 반환하고, 성공하면 true를 반환하도록 수정.
+    },
+    SendPaid: async function(){ // 얼마 지불해야하는지 보내기
+        let paid = document.getElementById('paid').value;
+        try{
+        const ts = await agContract.methods.checkOutTaxi(paid).send({from : Session.auth.wallet_address, gas:'500000'});
+        alert('전송완료')
+        }catch (error){
+            console.log(error);
+            alert(error);
+        }
+        
+    },
+    CheckInTaxi: async function(){
+        try{
+            const ts = await agContract.methods.checkInTaxi().send({from : Session.auth.wallet_address, gas:'500000'});
+            alert('체크인완료')
+        }catch (error){
+            console.log(error);
+            alert(error);
+        }
     }
 }
 // 1. 예약 정보로부터, 결제요금 받아오는 함수
@@ -32,6 +51,4 @@ const Payment = {
 
 // 2. 결제함수
 
-
-
-
+window.Payment = Payment;
