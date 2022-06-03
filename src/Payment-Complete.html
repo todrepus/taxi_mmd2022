@@ -1,66 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment-Complete</title>
+    <title>Claytn_Taxi</title>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/flexslider.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/Basic-Frame.css">
-    <script type='module' src="js/session.js"></script>
-    <script type='module' src="js/reserv.js"></script>
-    <script type='module' src="js/payment.js"></script>
+    <script src="js/modernizr-2.6.2.min.js"></script>
 
 
-    <script>
-        window.addEventListener('load', async ()=> {
-            console.log('d');
-            const success = await Reserv.update();
-            if (success == false){
-                alert('예약정보 불러오기 실패.');
-                return;
-            }
-  
-            const start_date = new Date(Reserv.data.start * 1000);
-            const end_date = new Date(Reserv.data.end * 1000);
-            const f = function(date){
-              return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분 ${date.getSeconds()}초`;
-            }
-            console.log(Reserv.data.start);
-            console.log(start_date);
-
-            const tr = document.getElementById('transaction');
-            if (Reserv.data.cancelled){ // 취소된경우
-                tr = 
-                `
-                결제요금 : ${Reserv.data.paid};
-                ==================================
-                취소가 완료되었습니다.
-                `;
-            }else if (Reserv.data.pay_completed){
-                tr = 
-                `
-                출발시간 : ${Reserv.data.start};
-                도착시간 : ${Reserv.data.end};
-                결제요금 : ${Reserv.data.paid};
-                ==================================
-                결제가 완료되었습니다.
-                `;
-            }
-            
-        });
-    </script>
 </head>
+
 <body>
-    <div class="wrapper">
-        <div class="content">
-            <div class="content1">
-                <p>결제 완료!</p>
+    <div class="fh5co-loader"></div>
+
+    <div id="page">
+        <nav class="fh5co-nav" role="navigation">
+            <div class="container-wrap">
+                <div class="top-menu">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div id="fh5co-logo"><a href="index.html">Taxi-driver</a></div>
+                        </div>
+                        <div class="col-xs-10 text-right menu-1">
+                            <ul>
+                                <li class="active"><a href="index.html">Home</a></li>
+                                <li><a href="work.html">Work</a></li>
+                                <li class="has-dropdown">
+                                    <a href="blog.html">Claytn</a>
+                                    <ul class="dropdown">
+                                        <li><a href="#">Introduction</a></li>
+                                        <li><a href="#">Claytnscope</a></li>
+                                        <li><a href="#">Contact</a></li>
+                                        <li><a href="#">API</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="about.html">About</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="content2-1">
-                <p>거래 내역:</p>
-                <p id='transaction'></p>
+        </nav>
+        <div class="container-style">
+            <div class="container-loading">
+                <p style="font-size: 25px;">결제 완료&nbsp;</p>
             </div>
+            <div><p style="font-size: 15px;">결제 내역</p></div>
+            <div class="">
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    <li></li>
+                </ul>
+            </div>
+            <button type="button" onclick="location.href='driver_request_list.html'" class="btn btn-info">요청 목록으로 돌아가기</button>
+        </div>
+        <div class="gototop js-top">
+            <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
         </div>
     </div>
-    </body>
-</html>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <!-- jQuery Easing -->
+        <script src="js/jquery.easing.1.3.js"></script>
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Waypoints -->
+        <script src="js/jquery.waypoints.min.js"></script>
+        <!-- Flexslider -->
+        <script src="js/jquery.flexslider-min.js"></script>
+        <!-- Magnific Popup -->
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/magnific-popup-options.js"></script>
+        <!-- Counters -->
+        <script src="js/jquery.countTo.js"></script>
+        <!-- Main -->
+        <script src="js/main.js"></script>
+</body>

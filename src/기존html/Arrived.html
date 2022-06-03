@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrived</title>
+    <link rel="stylesheet" href="css/Basic-Frame.css">
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/payment.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <div class="content1">
+                <p>목적지 도착!</p>
+            </div>
+            <div class="content2-1">
+                <p>지불 금액:&nbsp;</p><input type='text' id='paid'><p>원</p>&nbsp;
+                <button onclick="Payment.SendPaid();">요금정보 보내기</button>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

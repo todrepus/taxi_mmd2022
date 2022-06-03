@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="css/magnific-popup.css">
     <link rel="stylesheet" href="css/flexslider.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/Basic-Frame.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
 
 
@@ -28,7 +27,7 @@
                 <div class="top-menu">
                     <div class="row">
                         <div class="col-xs-2">
-                            <div id="fh5co-logo"><a href="index.html">Taxi-driver</a></div>
+                            <div id="fh5co-logo"><a href="index.html">Taxi</a></div>
                         </div>
                         <div class="col-xs-10 text-right menu-1">
                             <ul>
@@ -52,30 +51,48 @@
             </div>
         </nav>
         <div class="container-style">
-            <div class="container-loading">
-                <p style="font-size: 25px;">데리러 가는 중&nbsp;</p>
-                <div class="loading">
-                    <span></span>   <!--1. span은 하나의 원이다. -->
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            <div class="">
-                <ul style="list-style: none; margin: 0; padding: 0;">
-                    <li>손님 이름: XXX님</li>
-                    <li>전화번호: 010xxxxxxxx</li>
-                    <li>손님 위치: 서울특별시 광진구 능동로 209 세종대학교</li>
-                    <li>목적지: 서울특별시 종로구 새문안로 55</li>
-                </ul>
-            </div>
-            <div class="">
-                <button type="button" onclick="location.href='Driving.html'" class="btn btn-lg btn-danger">탑승 체크인</button>
+            <div class=>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>목적지</th>
+                            <th>도착지</th>
+                            <th>예약금</th>
+                            <th style="text-align: center;">요청수락</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>손님1</td>
+                            <td>가양</td>
+                            <td>목동</td>
+                            <td>1000원</td>
+                            <td style="text-align: center" ><a class="btn btn-primary">수락</a></td>
+                        </tr>
+                        <tr>
+                            <td>손님2</td>
+                            <td>구디</td>
+                            <td>어대공</td>
+                            <td>1000원</td>
+                            <td style="text-align: center" ><a class="btn btn-primary">수락</a></td>
+                        </tr>
+                        <tr>
+                            <td>손님3</td>
+                            <td>종로</td>
+                            <td>강남</td>
+                            <td>1000원</td>
+                            <td style="text-align: center" ><a class="btn btn-primary btn-ms">수락</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+
         <div class="gototop js-top">
             <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
         </div>
-    </div>
+
         <!-- jQuery -->
         <script src="js/jquery.min.js"></script>
         <!-- jQuery Easing -->
