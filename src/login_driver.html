@@ -13,22 +13,24 @@
     <script type='module' src="js/session.js"></script>
     <script type='module' src="js/user.js"></script>
     
-    	<!-- 블록체인 로그인 되어있는지 체크-->
+    <!-- 블록체인 로그인 되어있는지 체크-->
     <script>
 		window.onload = async() => {
 			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
 				if (Session.auth.userType == 'Client'){
-					await User.update(); // 유저정보 업데이트.
-					if (User.join){ // 이미 가입되어있는 경우,
+                    try{
+					    await User.update(); // 유저정보 업데이트.
+					    // 이미 가입되어있는 경우,
 						location.href = 'index_client.html';
-					}else{ // 블록체인 로그인은 되어있지만, 가입은 하지않은경우
+                    }catch(error){ // 블록체인 로그인은 되어있지만, 가입은 하지않은경우
                         location.href = 'join_client.html';
                     }
 				}else if (Session.auth.userType == 'Driver'){
-					await Driver.update();
-					if (Driver.join){ // 이미 가입되어있는 경우,
+                    try{
+                        await Driver.update();
+					    // 이미 가입되어있는 경우,
 						location.href = 'index_driver.html';
-					}else{ // 블록체인 로그인은 되어있지만, 가입은 하지않은경우
+					}catch(error){ // 블록체인 로그인은 되어있지만, 가입은 하지않은경우
                         location.href = 'join_driver.html';
                     }
 				}

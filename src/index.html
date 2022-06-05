@@ -22,14 +22,18 @@
 		window.onload = async() => {
 			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
 				if (Session.auth.userType == 'Client'){
-					await User.update(); // 유저정보 업데이트.
-					if (User.join){ // 이미 가입되어있는 경우,
-						location.href = 'index_client.html';
+					try{ // 이미 가입되어있는 경우, 
+						await User.update(); // 유저정보 업데이트.
+						location.href = 'index_client.html'; 
+					}catch (error){
+
 					}
 				}else if (Session.auth.userType == 'Driver'){
-					await Driver.update();
-					if (Driver.join){ // 이미 가입되어있는 경우,
+					try{ // 이미 가입되어있는 경우,
+						await Driver.update();
 						location.href = 'index_driver.html';
+					}catch (error){
+
 					}
 				}
 			}

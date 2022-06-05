@@ -9,13 +9,17 @@ function NotPhoneNumberException(name, message){
     this.name = name;
     this.message = message;
 }
+
+function UpdateErrorException(message){
+    this.name = "UpdateErrorException";
+    this.message = message;
+}
 const User = {
     name: '',
     nickname: '',
     email: '',
     phone_number: '',
     reserv: '',
-    join : false,
 
     update: async function(){
         try{
@@ -24,12 +28,11 @@ const User = {
             this.phone_number = user.phone_number;
             this.nickname = user.nickname;
             this.email = user.email;
-            this.join = true;
         }catch (event) {
             this.join = false;
             console.log(event);
             console.log('Update ERROR');
-
+            throw UpdateErrorException("업데이트에 실패하였습니다.");
         }
     },
 
@@ -91,7 +94,6 @@ const Driver = {
     email: '',
     car_number: '',
     phone_number: '',
-    join : false,
 
     update: async function(){
         try{
@@ -101,11 +103,9 @@ const Driver = {
             this.email = driver.email;
             this.car_number = driver.car_number;
             this.phone_number = driver.phone_number;
-            this.join = true;
         }catch (event) {
-            this.join = false;
             console.log('Update driver ERROR');
-
+            throw UpdateErrorException("업데이트에 실패하였습니다.");
         }
     },
 
