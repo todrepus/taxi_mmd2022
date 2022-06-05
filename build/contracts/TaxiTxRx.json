@@ -129,7 +129,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -142,7 +143,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -211,7 +213,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -250,7 +253,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -296,7 +300,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -367,7 +372,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -438,7 +444,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -559,7 +566,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -698,7 +706,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -801,7 +810,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.14+commit.80d49f37\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"acceptReservEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"addReservEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"cancelLastReservEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"checkInTaxiEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"checkOutTaxiEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"payCompleteEvent\",\"type\":\"event\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes16\",\"name\":\"phone_number\",\"type\":\"bytes16\"},{\"internalType\":\"bytes16\",\"name\":\"car_number\",\"type\":\"bytes16\"},{\"internalType\":\"bytes32\",\"name\":\"name\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"nickname\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"email\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"driving\",\"type\":\"bool\"}],\"internalType\":\"struct TaxiTxRx.Driver\",\"name\":\"x\",\"type\":\"tuple\"}],\"name\":\"ToStringDriver\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"phone_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"car_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"nickname\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"driving\",\"type\":\"bool\"}],\"internalType\":\"struct TaxiTxRx.StringDriver\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes16\",\"name\":\"phone_number\",\"type\":\"bytes16\"},{\"internalType\":\"bytes32\",\"name\":\"name\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"nickname\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"email\",\"type\":\"bytes32\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"}],\"internalType\":\"struct TaxiTxRx.User\",\"name\":\"x\",\"type\":\"tuple\"}],\"name\":\"ToStringUser\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"phone_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"nickname\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"}],\"internalType\":\"struct TaxiTxRx.StringUser\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"}],\"name\":\"acceptReserv\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"phone_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"car_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"nickname\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"name\":\"addDriver\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"sp\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"dp\",\"type\":\"string\"}],\"name\":\"addReserv\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"phone_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"nickname\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"name\":\"addUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cancelLastReserv\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"checkInTaxi\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"paid\",\"type\":\"uint16\"}],\"name\":\"checkOutTaxi\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"drivers\",\"outputs\":[{\"internalType\":\"bytes16\",\"name\":\"phone_number\",\"type\":\"bytes16\"},{\"internalType\":\"bytes16\",\"name\":\"car_number\",\"type\":\"bytes16\"},{\"internalType\":\"bytes32\",\"name\":\"name\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"nickname\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"email\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"driving\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"caller\",\"type\":\"address\"}],\"name\":\"getLastReservation\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"driver\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"occur\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"start\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"paid\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"pay_completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"cancelled\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"start_point\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"dest_point\",\"type\":\"string\"}],\"internalType\":\"struct TaxiTxRx.Reservation\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"caller\",\"type\":\"address\"}],\"name\":\"getReservationList\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"driver\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"occur\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"start\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"paid\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"pay_completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"cancelled\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"start_point\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"dest_point\",\"type\":\"string\"}],\"internalType\":\"struct TaxiTxRx.Reservation[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"caller\",\"type\":\"address\"}],\"name\":\"getStringDriver\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"phone_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"car_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"nickname\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"driving\",\"type\":\"bool\"}],\"internalType\":\"struct TaxiTxRx.StringDriver\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"caller\",\"type\":\"address\"}],\"name\":\"getStringUser\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"phone_number\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"nickname\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"}],\"internalType\":\"struct TaxiTxRx.StringUser\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"setPayCompleteLastReserv\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"user_reservs\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"driver\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"occur\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"start\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"paid\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"pay_completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"cancelled\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"start_point\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"dest_point\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"users\",\"outputs\":[{\"internalType\":\"bytes16\",\"name\":\"phone_number\",\"type\":\"bytes16\"},{\"internalType\":\"bytes32\",\"name\":\"name\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"nickname\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"email\",\"type\":\"bytes32\"},{\"internalType\":\"bool\",\"name\":\"created\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/TaxiTxRx.sol\":\"TaxiTxRx\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/TaxiTxRx.sol\":{\"keccak256\":\"0x5f75f5c796b549c32697f30ffdbe2aecb363fa7e228a681ae0c5431b274fce1c\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://adc0faa5af63cf07a2b8f30894e17ed5cbe46d6cc440ded233d0dca0830ed105\",\"dweb:/ipfs/QmNc6UgjckoyEwFVqZmK4EAGWaJPBmqD4U4ADEdH6QZgYx\"]}},\"version\":1}",
@@ -32082,12 +32092,13 @@
     "1001": {
       "events": {},
       "links": {},
-      "address": "0x64ea311E86163A151B96deec6cAad293A8c58bc5",
-      "transactionHash": "0xdaf372f98782341713873279ff183ef49fca43f9b0552fc1eaba07884f6372c4"
+      "address": "0xEdD4D4D21A330DC0645e1aeEB4ed1C4597f6D840",
+      "transactionHash": "0x09563e74f9132f972b54dd2e9c0705db9b0fae619c9be62ee9f66d50c4d80136"
     }
   },
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-06-05T12:44:59.061Z",
+  "updatedAt": "2022-06-05T13:40:29.662Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
