@@ -35,7 +35,7 @@ export const Reserv = {
     // 2. 예약하기 (출발지, 목적지)
     push: async function(sp, dp){
         try{
-            const result = await agContract.methods.addReserv(sp, dp).send({from : Session.auth.wallet_address, gas:'5000000'});
+            const result = await agContract.methods.addReserv(sp, dp).send({from : Session.auth.wallet_address, gas:'500000'});
             
             console.log(result);
             alert('성공');
