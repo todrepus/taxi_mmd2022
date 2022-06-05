@@ -11,7 +11,33 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
 
-  
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/user.js"></script>
+    
+	<!-- 블록체인 로그인 되어있는지 체크-->
+	<script>
+		window.onload = async() => {
+			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+				if (Session.auth.userType == 'Client'){
+					try{ // 이미 가입되어있는 경우, 
+						await User.update(); // 유저정보 업데이트.
+						location.href = 'index_client.html'; 
+					}catch (error){
+
+					}
+				}else if (Session.auth.userType == 'Driver'){
+					try{ // 이미 가입되어있는 경우,
+						await Driver.update();
+						location.href = 'index_driver.html';
+					}catch (error){
+
+					}
+				}
+			}else{
+                location.href = 'index.html';
+            }
+		}
+	</script>
 </head>
 
 <body>
@@ -40,14 +66,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="phone_number">전화번호</label>
-                                <input type="tel" class="form-control" id="phone_number" placeholder="01012345678 (-제외하고 작성해주세요) " maxlength='11'required>
+                                <input type="tel" class="form-control" id="phone_number" placeholder="01012345678 (-제외하고 작성해주세요) " maxlength='11' required>
                                 <div class="invalid-feedback">
                                     전화번호를 입력해주세요.<br>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="phone_number">차량번호</label>
-                                <input type="tel" class="form-control" id="car_number" placeholder="" maxlength='10'required>
+                                <input type="text" class="form-control" id="car_number" placeholder="" maxlength='10' required>
                                 <div class="invalid-feedback">
                                     차량번호를 입력해주세요.<br>
                                 </div>
@@ -87,7 +113,7 @@
                             </div>
                            
                             <div class="mb-4"></div>
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" >가입 완료</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="Driver.addDriver(event);">가입 완료</button>
                         </form>
                     </div>
                 </div>
@@ -100,6 +126,8 @@
 
             Array.prototype.filter.call(forms, (form) => {
                 form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                        event.stopPropagation();
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();

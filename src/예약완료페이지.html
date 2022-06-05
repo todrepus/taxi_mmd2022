@@ -12,6 +12,48 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
+
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/reserv.js"></script>
+    <script type='module' src="js/user.js"></script>
+  
+    <!-- 블록체인 로그인 되어있는지 체크-->
+    <script>
+      window.onload = async() => {
+        if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+          if (Session.auth.userType == 'Client'){
+            try{ // 이미 가입되어있는 경우, 
+              await User.update(); // 유저정보 업데이트.
+            }catch (error){
+              Session.handleLogout();
+            }
+          }else if (Session.auth.userType == 'Driver'){
+            try{ // 이미 가입되어있는 경우,
+              await Driver.update();
+              location.href = 'index_driver.html';
+            }catch (error){
+              Session.handleLogout();
+            }
+          }
+        }else{
+          location.href = 'index.html';
+        }
+        
+        // 모든 코드가 성공적으로 끝난뒤,
+
+        const success = await Reserv.update();
+            if (success == false){
+                alert('예약정보 불러오기 실패.');
+                return;
+            }
+            document.getElementById('start_point').innerHTML = Reserv.data.start_point;
+            document.getElementById('dest_point').innerHTML = Reserv.data.dest_point;
+            Reserv.addCallback();
+
+            Reserv.process();
+      }
+    </script>
+    </head>
 </head>
 
   <body>
@@ -44,7 +86,7 @@
                                           <li class="list-group-item d-flex justify-content-between lh-sm">
                                             <div>
                                               <h5 class="my-0" style="margin-bottom: 0px;">출발지:</h5>
-
+                                              <h5 id='start_point' style='border-bottom:1px solid;'>요기</h5>
                                             </div>
 
                                           </li>
@@ -52,7 +94,7 @@
                                           <li class="list-group-item d-flex justify-content-between lh-sm">
                                             <div>
                                               <h5 class="my-0" style="margin-bottom: 0px;">도착지:</h5>
-
+                                              <h5 id='dest_point' style='border-bottom:1px solid;'>yy</span>
                                             </div>
 
                                           </li>
@@ -62,7 +104,7 @@
 
                                       </div>
 
-                                      <button class="w-50 btn btn-primary btn-lg" type="submit" style="margin-top: 23px;margin-left: 25px;">취소하기</button>
+                                      <button class="w-50 btn btn-primary btn-lg" type="submit" style="margin-top: 23px;margin-left: 25px;" onclick="Reserv.cancel()">취소하기</button>
 
                                   </div>
                               </div>

@@ -35,11 +35,15 @@ export const Reserv = {
     // 2. 예약하기 (출발지, 목적지)
     push: async function(sp, dp){
         try{
-            const result = await agContract.methods.addReserv(sp, dp).send({from : Session.auth.wallet_address, gas:'500000'});
+            const result = await agContract.methods.addReserv(sp, dp).send({from : Session.auth.wallet_address, gas:'5000000'});
+            
             console.log(result);
+            alert('성공');
             return true;
         }catch (error){
+            
             console.log(error);
+            alert('성공2');
             return false;
         }
     },
@@ -81,21 +85,18 @@ export const Reserv = {
     },
 
     process : function(){
-        if (!success){
-            return;
-        }
         if (this.data.pay_completed){ // 결제가 모두 완료된경우
             alert('예약이 끝에 도달함');
-            
+            location.href = 'index_client.html' // 처음으로 돌아가
         }
         else if (this.data.end != 0){ // 도착완료
             alert('도착완료')
-            location.href = 'payment_complete.html';
+            location.href = '도착시 결제페이지.html';
         }else if (this.data.start != 0){ // 운행중 (체크인)
             document.getElementById('content_reserv').innerHTML = "운행중......";
         }else if (this.data.cancelled){ // 취소인경우
             alert('취소')
-            location.href = 'payment_cancel.html'
+            location.href = '예약 취소시 결제페이지.html'
         }
     },
 

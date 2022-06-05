@@ -38,32 +38,31 @@ const User = {
 
     addUser: async function(event){
         try{
-            let phone_number = event.target.form.phone_number.value;
-            let name = event.target.form.name.value;
-            let nickname = event.target.form.nickname.value;
-            let email = event.target.form.email.value;
-
+            let phone_number = document.getElementById('phone_number').value;
+            let name = document.getElementById('name').value;
+            let nickname = document.getElementById('nickname').value;
+            let email = document.getElementById('email').value;
             phone_number = phone_number.trim()
             name = name.trim();
             nickname = nickname.trim();
             email = email.trim();
 
             if (name === ""){
-                event.target.form.name.focus();
+                document.getElementById('name').focus();
                 throw new SpaceException('SpaceException', '이름이 공백입니다.');
             }
             if (nickname === ""){
-                event.target.form.nickname.focus();
+                document.getElementById('nickname').focus();
                 throw new SpaceException('SpaceException', '별명이 공백입니다.');
             }
 
             if (phone_number === ""){
-                event.target.form.phone_number.focus();
+                document.getElementById('phone_number').focus();
                 throw new SpaceException('SpaceException', '핸드폰번호가 공백입니다.');
             }
 
             if (email === ""){
-                event.target.form.email.focus();
+                document.getElementById('email').focus();
                 throw new SpaceException('email', '이메일이 공백입니다.');
             }
 
@@ -74,6 +73,7 @@ const User = {
             
             await agContract.methods.addUser(phone_number, name, nickname, email).send({from : Session.auth.wallet_address, gas:'500000'});
             alert('가입완료')
+            location.reload();
         }catch (event){
             if (event instanceof SpaceException ){
                 alert(event.message);
@@ -109,26 +109,47 @@ const Driver = {
         }
     },
 
-    addDriver: async function(){
+    addDriver: async function(event){
         try{
-            let phone_number = document.getElementById('phone_number').value
-            let car_number = document.getElementById('car_number');
-            let name = document.getElementById('name').value
-            let nickname = '';
-            let email = '';
+            let phone_number = document.getElementById('phone_number').value;
+            let car_number = document.getElementById('car_number').value;
+            let name = document.getElementById('name').value;
+            let nickname = document.getElementById('nickname').value;
+            let email = document.getElementById('email').value;
             phone_number = phone_number.trim()
-            name = name.trim()
+            car_number = car_number.trim()
+            name = name.trim();
+            nickname = nickname.trim();
+            email = email.trim();
+            if (name === ""){
+                document.getElementById('name').focus();
+                throw new SpaceException('SpaceException', '이름이 공백입니다.');
+            }
+            if (nickname === ""){
+                document.getElementById('nickname').focus();
+                throw new SpaceException('SpaceException', '별명이 공백입니다.');
+            }
 
-            if (phone_number === "" || name === ""){
-                throw new SpaceException('SpaceException', '핸드폰번호 혹은 이름이 공백입니다.');
+            if (phone_number === ""){
+                document.getElementById('phone_number').focus();
+                throw new SpaceException('SpaceException', '핸드폰번호가 공백입니다.');
+            }
+            if (car_number === ""){
+                document.getElementById('car_number').focus();
+                throw new SpaceException('SpaceException', '차량번호가 공백입니다.');
+            }
+            if (email === ""){
+                document.getElementById('email').focus();
+                throw new SpaceException('email', '이메일이 공백입니다.');
             }
             let regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
             if (regPhone.test(phone_number) != true){ // 휴대폰번호 형식이 아니라면,
                 throw new NotPhoneNumberException('NotPhoneNumberException', '핸드폰번호 형식 이상합니다.');
             }
             
-            await agContract.methods.addUser(phone_number, car_number, name, nickname, email).send({from : Session.auth.wallet_address, gas:'500000'});
+            await agContract.methods.addDriver(phone_number, car_number, name, nickname, email).send({from : Session.auth.wallet_address, gas:'500000'});
             alert('가입완료')
+            location.reload();
         }catch (event){
             if (event instanceof SpaceException ){
                 alert(event.message);
@@ -136,6 +157,7 @@ const Driver = {
                 alert(event.message);
             }
             else{
+                console.log(event);
                 alert('가입 실패')
             }
         }

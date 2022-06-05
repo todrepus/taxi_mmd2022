@@ -96,37 +96,13 @@ const MapHelper = {
         
         const success = await Reserv.push(this.points[0], this.points[1]);
         if (success)
-            location.href = '예약완료.html';
+            location.href = '예약완료페이지.html';
     }
 }
 
 window.MapHelper = MapHelper;
 
-window.onload = () =>{
-    const jusoModal = document.getElementById('jusoModal');
-    
-    jusoModal.addEventListener('show.bs.modal', function (event){
-        const input = event.relatedTarget;
-        const from = input.getAttribute('data-bs-from');
-
-        let i = 0; // 
-        if (from === "dest_point"){
-            i = 1; // 목적지로 설정
-        }
-        MapHelper.now_target_pos = i;
-    });
-
-    jusoModal.addEventListener('hidden.bs.modal', function (event){
-        document.getElementById('juso_input').value = '';
-        document.getElementById('selected_juso').value = '';
-        document.getElementById('juso_detail').value = '';
-
-        document.getElementById('detail').style.visibility = 'hidden';
-        document.getElementById('juso_ul').innerHTML = '';
-
-
-    });
-
+window.addEventListener('load', ()=>{
     MapHelper.init();
 
     (async() => {
@@ -139,7 +115,7 @@ window.onload = () =>{
                 can_reserv = false;
             }
         }catch (error){
-
+            console.log(error);
         }
 
         if (!can_reserv){
@@ -148,4 +124,4 @@ window.onload = () =>{
         const btn = document.getElementById('reservBtn');
         btn.disabled = false;
     })();
-}
+});

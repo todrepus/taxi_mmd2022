@@ -37,18 +37,16 @@
 		window.onload = async() => {
 			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
 				if (Session.auth.userType == 'Client'){
-					await User.update(); // 유저정보 업데이트.
-					if (User.join){ // 이미 가입되어있는 경우,
-						location.href = 'index_client.html';
-					}else{
+					try{ // 이미 가입되어있는 경우, 
+						await User.update(); // 유저정보 업데이트.
+					}catch (error){
 						Session.handleLogout();
 					}
 				}else if (Session.auth.userType == 'Driver'){
-					await Driver.update();
-					if (Driver.join){ // 이미 가입되어있는 경우,
+					try{ // 이미 가입되어있는 경우,
+						await Driver.update();
 						location.href = 'index_driver.html';
-					}
-					else{
+					}catch (error){
 						Session.handleLogout();
 					}
 				}
@@ -103,7 +101,7 @@
 				   				<div class="slider-text-inner">
 				   					<h1>안녕하세요 Clatyn 기반 택시 <br>예약 서비스에 오신것을 환영합니다</h1>
 										<h2>
-										<p><a class="btn btn-primary btn-demo" href="login_client.html"></i>예약하러가기</a> <a href=login_driver.html class="btn btn-primary btn-learn">거래내역</a></p>
+										<p><a class="btn btn-primary btn-demo" href="예약 페이지.html"></i>예약하러가기</a> <a href=login_driver.html class="btn btn-primary btn-learn">거래내역</a></p>
 				   				</div>
 				   			</div>
 				   		</div>

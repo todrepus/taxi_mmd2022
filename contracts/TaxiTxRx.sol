@@ -109,14 +109,15 @@ contract TaxiTxRx {
 
     // 예약 등록 [ 사용자용 ]
     function addReserv(string memory sp, string memory dp) public {
-        require(users[msg.sender].created == true && getLastReservation(msg.sender).occur == 0);
+        require(users[msg.sender].created == true);
+        require(user_reservs[msg.sender].length == 0 || (user_reservs[msg.sender].length > 0 && getLastReservation(msg.sender).occur == 0));
         user_reservs[msg.sender].push(Reservation(msg.sender, msg.sender, block.timestamp, 0, 0, 0, false, false, sp, dp));
         emit addReservEvent();
     }
 
     // 예약 취소 [ 사용자용 ]
     function cancelLastReserv() public {
-        require(users[msg.sender].created == true && getLastReservation(msg.sender).start == 0);
+        require(users[msg.sender].created == true && (user_reservs[msg.sender].length > 0 && getLastReservation(msg.sender).start == 0));
         Reservation storage last = _getLastReservation(msg.sender);
         if (last.driver == msg.sender){
             uint size = user_reservs[last.target].length;
@@ -130,7 +131,7 @@ contract TaxiTxRx {
 
     // 결제 완료 [ 사용자용 ]
     function setPayCompleteLastReserv() public{
-        require(users[msg.sender].created == true && getLastReservation(msg.sender).end != 0);
+        require(users[msg.sender].created == true && (user_reservs[msg.sender].length > 0 && getLastReservation(msg.sender).end != 0));
         Reservation storage last = _getLastReservation(msg.sender);
         last.pay_completed = true;
         Driver storage driver = drivers[last.driver];
@@ -153,7 +154,7 @@ contract TaxiTxRx {
     // 요청 수락 [ 택시기사용 ]
     function acceptReserv(address target) public {
         require(drivers[msg.sender].created == true && drivers[msg.sender].driving == false);
-        require(users[target].created == true && getLastReservation(msg.sender).start == 0);
+        require(users[target].created == true && getLastReservation(target).start == 0);
         Driver storage driver = drivers[msg.sender];
         driver.target = target;
         driver.driving = true;

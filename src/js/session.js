@@ -99,7 +99,7 @@ const Session = {
   },
   integrateWallet: function (privateKey) {
     const walletInstance = cav.klay.accounts.privateKeyToAccount(privateKey);
-    walletInstance.address = caver.utils.toChecksumAddress(walletInstance.address);
+    walletInstance.address = Caver.utils.toChecksumAddress(walletInstance.address);
     
     cav.klay.accounts.wallet.add(walletInstance);
     // 브라우저가 닫히기전까지 session에 저장.

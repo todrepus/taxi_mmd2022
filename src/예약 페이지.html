@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Claytn_Taxi</title>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/user.js"></script>
+    <script type='module' src="js/map.js"></script>
+  
+    <!-- 블록체인 로그인 되어있는지 체크-->
+    <script>
+      window.onload = async() => {
+        if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+          if (Session.auth.userType == 'Client'){
+            try{ // 이미 가입되어있는 경우, 
+              await User.update(); // 유저정보 업데이트.
+            }catch (error){
+              Session.handleLogout();
+            }
+          }else if (Session.auth.userType == 'Driver'){
+            try{ // 이미 가입되어있는 경우,
+              await Driver.update();
+              location.href = 'index_driver.html';
+            }catch (error){
+              Session.handleLogout();
+            }
+          }
+        }else{
+          location.href = 'index.html';
+        }
+      }
+    </script>
+</head>
+
+  <body>
+
+
+    <div id="container-wrap" class="flex">
+        <div class="padding">
+            <div class="row">
+                <div class="card">
+
+                    <div class="card-body">
+                      <div class="content border_box" style="padding:10px; margin:10px;">
+                        <div id='map'>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3163.1742541054036!2d127.07151596564788!3d37.55095813277712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca4d0720eecc1%3A0x1a7ad975c6b5e4eb!2z7IS47KKF64yA7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1652763792477!5m2!1sko!2skr"
+                            width="600" height="450" style="border:0;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        <div id=''>
+
+                                <div class="col-md-5 col-lg-6 order-md-last" style="padding-left: 0px;padding-right: 0px;">
+                                  <h4 class="d-flex justify-content-between align-items-center mb-3">
+
+                                  </h4>
+                                  <ul class="list-group mb-3">
+
+                                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                                      <div>
+                                        <h5 class="my-0" style="margin-bottom: 0px;">출발지:</h5>
+                                        <input readonly type='text' class="form-control" placeholder="자세한 주소를 입력해주세요." id='start_point' data-toggle="modal" data-target="#jusoModal" data-from='start_point' style='border-bottom:1px solid;'>
+                                      </div>
+
+                                    </li>
+
+                                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                                      <div>
+                                        <h5 class="my-0" style="margin-bottom: 0px;">도착지:</h5>
+                                        <input readonly type='text' class="form-control" placeholder="자세한 주소를 입력해주세요." id='dest_point'  data-toggle="modal" data-target="#jusoModal" data-from='dest_point' style='border-bottom:1px solid;'>
+                                      </div>
+
+                                    </li>
+
+                                  </ul>
+
+
+                                </div>
+
+                                <button class="w-50 btn btn-primary btn-lg" style="margin-top: 23px;margin-left: 25px;" id='reservBtn' onclick='MapHelper.completeReserv()'>예약하기</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!--- 주소 모달창 --->
+    <div class="modal fade" id="jusoModal" tabindex="-1" aria-labelledby="jusoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="jusoModalLabel">도로명 주소 검색</h5>
+        
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                  <div class="input-group mb-3">
+                      <div class="input-group-addon">
+                        <span class="input-group-text" id="basic-addon1">도로명</span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="" aria-label="juso" aria-describedby="basic-addon1" id='juso_input'>
+                  </div>
+                  <div>
+                      <button type='button' class="btn btn-primary" onclick="(async() => {const juso=document.getElementById('juso_input').value;await MapHelper.search(juso)})()">검색</button>
+                  </div>
+              </div>
+              <hr class="my-2">
+              <div class="mb-3">
+                  <label for="result-text" class="col-form-label">결과:</label>
+                  <ul class="list-group list-group-flush overflow-auto" id='juso_ul' style='height:100px;'>
+                  </ul>
+              </div>
+              <hr class="my-2">
+              <div class="mb-3" id='detail' style='visibility:hidden;'>
+                  <label for="detailed" class="col-form-label" id='selected_juso'></label>
+                  <input type="text" class="form-control" placeholder="자세한 주소를 입력해주세요." aria-label="juso" aria-describedby="basic-addon1" id='juso_detail'>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" id='addBtn'>등록</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--주소 모달창 끝-->
+
+    <script>
+      $('#jusoModal').on('show.bs.modal', function (event){
+          const input = event.relatedTarget;
+          const from = input.getAttribute('data-from');
+
+          let i = 0; // 
+          if (from === "dest_point"){
+              i = 1; // 목적지로 설정
+          }
+          MapHelper.now_target_pos = i;
+      });
+
+      $('#jusoModal').on('hidden.bs.modal', function (event){
+          document.getElementById('juso_input').value = '';
+          document.getElementById('selected_juso').value = '';
+          document.getElementById('juso_detail').value = '';
+
+          document.getElementById('detail').style.visibility = 'hidden';
+          document.getElementById('juso_ul').innerHTML = '';
+
+
+      });
+    </script>
+
+</body>
+</html>
