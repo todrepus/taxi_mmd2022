@@ -17,14 +17,38 @@ contract TaxiTxRx {
 
 
     struct User{
-        string phone_number; // 핸드폰번호
-        string name; // 이름
+        bytes16 phone_number; // 핸드폰번호
+        bytes32 name; // 이름
+        bytes32 nickname; // 별명
+        bytes32 email; // 이메일
         bool created; // 생성여부
     }
 
     struct Driver{
-        string phone_number; // 폰번호
+        bytes16 phone_number; // 핸드폰번호
+        bytes16 car_number; // 차량번호
+        bytes32 name; // 이름
+        bytes32 nickname; // 별명
+        bytes32 email; // 이메일
+        address target; // 현재 거래중인 사용자
+        bool created; // 생성여부
+        bool driving; // 거래중여부
+    }
+
+    struct StringUser{
+        string phone_number;
+        string name;
+        string nickname;
+        string email;
+        bool created;
+    }
+
+    struct StringDriver{
+        string phone_number; // 핸드폰번호
+        string car_number; // 차량번호
         string name; // 이름
+        string nickname; // 별명
+        string email; // 이메일
         address target; // 현재 거래중인 사용자
         bool created; // 생성여부
         bool driving; // 거래중여부
@@ -39,6 +63,7 @@ contract TaxiTxRx {
     event payCompleteEvent(address indexed addr);
 
     address public owner; // 스마트계약서 작성자
+
     mapping (address => User) public users; // 사용자 정보목록
     mapping (address => Driver) public drivers; // 택시기사 목록
     mapping (address => Reservation[]) public user_reservs; // 사용자별 예약목록
@@ -49,9 +74,9 @@ contract TaxiTxRx {
 
 
     // 사용자 정보 가져오기.
-    function getUser(address caller) public view returns (User memory){
+    function getStringUser(address caller) public view returns (StringUser memory){
         require(users[caller].created == true);
-        return users[caller];
+        return ToStringUser(users[caller]);
     }
 
     // 사용자 마지막 예약 가져오기. 현재 진행중인 예약도 해당됨. (외부 호출용)
@@ -76,9 +101,9 @@ contract TaxiTxRx {
 
 
     // 사용자 등록. [ 사용자용 ]
-    function addUser(string memory phone_number, string memory name) public {
+    function addUser(string memory phone_number, string memory name, string memory nickname, string memory email) public {
         require(users[msg.sender].created == false);
-        users[msg.sender] = User(phone_number, name, true);
+        users[msg.sender] = User(ToBytes16(phone_number), ToBytes32(name),ToBytes32(nickname), ToBytes32(email), true);
         
     }
 
@@ -113,10 +138,16 @@ contract TaxiTxRx {
         emit payCompleteEvent(last.target);
     }
 
+    // 운전기사 정보 업데이트 [ 택시기사용 ]
+    function getStringDriver(address caller) public view returns(StringDriver memory){
+        require(drivers[caller].created == true);
+        return ToStringDriver(drivers[caller]);
+    }
     // 운전기사 등록 [ 택시기사용 ]
-    function addDriver(string memory phone_number, string memory name) public {
+    function addDriver(string memory phone_number, string memory car_number, string memory name, string memory nickname, string memory email) public {
         require(drivers[msg.sender].created == false);
-        drivers[msg.sender] = Driver(phone_number, name, msg.sender, true, false);
+        drivers[msg.sender] = Driver(ToBytes16(phone_number), ToBytes16(car_number), ToBytes32(name), ToBytes32(nickname), ToBytes32(email),
+        msg.sender, true, false);
         
     }
     // 요청 수락 [ 택시기사용 ]
@@ -157,5 +188,58 @@ contract TaxiTxRx {
     }
     
 
+    function ToBytes32(string memory x) internal pure returns (bytes32){
+        return bytes32(bytes(x));
+    }
 
+    function ToBytes16(string memory x) internal pure returns (bytes16){
+        return bytes16(bytes(x));
+    } 
+
+    function bytes16ToString(bytes16 _bytes16) internal pure returns (string memory) {
+        uint8 i = 0;
+        while(i < 16 && _bytes16[i] != 0) {
+            i++;
+        }
+        bytes memory bytesArray = new bytes(i);
+        for (i = 0; i < 16 && _bytes16[i] != 0; i++) {
+            bytesArray[i] = _bytes16[i];
+        }
+        return string(bytesArray);
+    }
+
+    function bytes32ToString(bytes32 _bytes32) internal pure returns (string memory) {
+        uint8 i = 0;
+        while(i < 32 && _bytes32[i] != 0) {
+            i++;
+        }
+        bytes memory bytesArray = new bytes(i);
+        for (i = 0; i < 32 && _bytes32[i] != 0; i++) {
+            bytesArray[i] = _bytes32[i];
+        }
+        return string(bytesArray);
+    }
+
+    function ToStringUser(User memory x) public pure returns (StringUser memory){
+        StringUser memory s_user;
+        s_user.phone_number = bytes16ToString(x.phone_number);
+        s_user.name = bytes32ToString(x.name);
+        s_user.nickname = bytes32ToString(x.nickname);
+        s_user.email = bytes32ToString(x.email);
+        s_user.created = x.created;
+        return s_user;
+    }
+
+    function ToStringDriver(Driver memory x) public pure returns (StringDriver memory){
+        StringDriver memory s_driver;
+        s_driver.phone_number = bytes16ToString(x.phone_number);
+        s_driver.car_number = bytes16ToString(x.car_number);
+        s_driver.name = bytes32ToString(x.name);
+        s_driver.nickname = bytes32ToString(x.nickname);
+        s_driver.email = bytes32ToString(x.email);
+        s_driver.target = x.target;
+        s_driver.driving = x.driving;
+        s_driver.created = x.created;
+        return s_driver;
+    }
 }

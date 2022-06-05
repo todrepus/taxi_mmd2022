@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/user.js"></script>
+    
+    	<!-- 블록체인 로그인 되어있는지 체크-->
+    <script>
+		window.onload = async() => {
+			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+				if (Session.auth.userType == 'Client'){
+					await User.update(); // 유저정보 업데이트.
+					if (User.join){ // 이미 가입되어있는 경우,
+						location.href = 'index_client.html';
+					}else{ // 블록체인 로그인은 되어있지만, 가입은 하지않은경우
+                        location.href = 'join_client.html';
+                    }
+				}else if (Session.auth.userType == 'Driver'){
+					await Driver.update();
+					if (Driver.join){ // 이미 가입되어있는 경우,
+						location.href = 'index_driver.html';
+					}else{ // 블록체인 로그인은 되어있지만, 가입은 하지않은경우
+                        location.href = 'join_driver.html';
+                    }
+				}
+			}
+		}
+	</script>
 </head>
 
 <body>
@@ -21,21 +46,24 @@
                     <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <label class="text-muted" for="exampleInputEmail1">Email
+                                <label class="text-muted" for="exampleInputKeyStore1">Email
                                     address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">We don't share email with
+                                <input type="file" class="form-control" id="exampleInputKeyStore1"
+                                    aria-describedby="keystoreHelp" onchange="Session.handleImport(event);">
+                                <small id="emailHelp" class="form-text text-muted">We don't share keystore with
                                     anyone</small>
                             </div>
                             <div class="form-group">
                                 <label class="text-muted" for="exampleInputPassword1">Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"
-                                    placeholder="Password">
+                                    placeholder="Password" onchange="Session.handlePassword(event);">
                                 <small id="passwordHelp" class="form-text text-muted">your password is saved
                                     in encrypted form</small>
                             </div>
-                            <p><a class="btn btn-primary" href="index_driver.html"></i>Submit</a> <a class="btn btn-info" href="join_driver.html">Join</a></p>
+                            <p>
+                                <a class="btn btn-primary" onclick="Session.handleLogin('Driver');"></i> Submit</a>
+                                <a class="btn btn-info" href="join_driver.html">Join</a>
+                            </p>
                         </form>
                     </div>
                 </div>

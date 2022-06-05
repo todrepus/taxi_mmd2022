@@ -15,25 +15,30 @@ const agContract = new cav.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS);
 const Session = {
   auth: {
     accessType: 'keystore',
+    userType: '',
     keystore: '',
     password: '',
     wallet_address: '',
   },
   init: async function () {
     const walletFromSession = sessionStorage.getItem('walletInstance');
+    const userType = sessionStorage.getItem('userType');
     if (walletFromSession) {
       try {
         cav.klay.accounts.wallet.add(JSON.parse(walletFromSession));
         const wallet = this.getWallet();
         wallet.address = cav.utils.toChecksumAddress(wallet.address);
         this.auth.wallet_address = wallet.address;
+        this.auth.userType = userType;
       } catch(e) {
         sessionStorage.removeItem('walletInstance');
+        sessionStorage.removeItem('userType');
       }
     }else{
       if (Setting.DEBUG){ // 자동 로그인
         this.auth.accessType = 'privateKey';
-        this.handleLogin();
+        this.auth.userType = 'Client'; // 손님으로 고정
+        this.handleLogin(this.auth.userType);
       }
     }
   },
@@ -58,7 +63,7 @@ const Session = {
     }
   },
 
-  handleLogin: async function () {
+  handleLogin: async function (user_type) {
     let login = false;
     if (this.auth.accessType === 'keystore') {
       try {
@@ -80,6 +85,7 @@ const Session = {
       }
     }
     if (login){
+      sessionStorage.setItem('userType', user_type);
       location.reload();
     }
   },
@@ -109,6 +115,7 @@ const Session = {
   reset: function () {
     this.auth = {
       accessType: 'keystore',
+      userType : '',
       keystore: '',
       password: '',
       wallet_address : ''
@@ -118,6 +125,7 @@ const Session = {
   removeWallet: function () {
     cav.klay.accounts.wallet.clear();
     sessionStorage.removeItem("walletInstance");
+    sessionStorage.removeItem("userType");
     this.reset();
   },
   checkValidKeystore: function (keystore) {
@@ -137,7 +145,6 @@ const Session = {
 window.Session = Session;
 
 window.addEventListener ('DOMContentLoaded', async function () {
-  console.log('z');
   await Session.init();
 });
 

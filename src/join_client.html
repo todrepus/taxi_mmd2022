@@ -10,6 +10,27 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/user.js"></script>
+    
+    <!-- 블록체인 로그인 되어있는지 체크-->
+	<script>
+		window.onload = async() => {
+			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+				if (Session.auth.userType == 'Client'){
+					await User.update(); // 유저정보 업데이트.
+					if (User.join){ // 이미 가입되어있는 경우,
+						location.href = 'index_client.html';
+					}
+				}else if (Session.auth.userType == 'Driver'){
+					await Driver.update();
+					if (Driver.join){ // 이미 가입되어있는 경우,
+						location.href = 'index_driver.html';
+					}
+				}
+			}
+		}
+	</script>
 </head>
 
 <body>
@@ -23,23 +44,31 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="name">이름</label>
-                                    <input type="text" class="form-control" id="name" placeholder="" value="" required>
+                                    <input type="text" class="form-control" id="name" placeholder="" value="" maxlength='10' required>
                                     <div class="invalid-feedback">
                                         이름을 입력해주세요.<br>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="nickname">별명</label>
-                                    <input type="text" class="form-control" id="nickname" placeholder="" value="" required>
+                                    <input type="text" class="form-control" id="nickname" placeholder="" value="" maxlength='10' required>
                                     <div class="invalid-feedback">
                                         별명을 입력해주세요.<br>
                                     </div>
                                 </div>
                             </div>
-        
+
+                            <div class="mb-3">
+                                <label for="phone_number">전화번호</label>
+                                <input type="tel" class="form-control" id="phone_number" placeholder="xxx-xxxx-xxxx" maxlength='12'required>
+                                <div class="invalid-feedback">
+                                    전화번호를 입력해주세요.<br>
+                                </div>
+                            </div>
+
                             <div class="mb-3">
                                 <label for="email">이메일</label>
-                                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                                <input type="email" class="form-control" id="email" placeholder="you@example.com" maxlength='32' required>
                                 <div class="invalid-feedback">
                                     이메일을 입력해주세요.<br>
                                 </div>
