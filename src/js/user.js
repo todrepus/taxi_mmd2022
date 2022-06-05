@@ -19,15 +19,17 @@ const User = {
     nickname: '',
     email: '',
     phone_number: '',
+    driver : '',
     reserv: '',
 
-    update: async function(){
+    update: async function(target=Session.auth.wallet_address){
         try{
-            const user = await agContract.methods.getStringUser(Session.auth.wallet_address).call();
+            const user = await agContract.methods.getStringUser(target).call();
             this.name = user.name;
             this.phone_number = user.phone_number;
             this.nickname = user.nickname;
             this.email = user.email;
+            this.driver = user.driver;
         }catch (event) {
             this.join = false;
             console.log(event);
@@ -94,15 +96,19 @@ const Driver = {
     email: '',
     car_number: '',
     phone_number: '',
+    target : '',
+    driving : false,
 
-    update: async function(){
+    update: async function(target=Session.auth.wallet_address){
         try{
-            const driver = await agContract.methods.getStringDriver(Session.auth.wallet_address).call();
+            const driver = await agContract.methods.getStringDriver(target).call();
             this.name = driver.name;
             this.nickname = driver.nickname;
             this.email = driver.email;
             this.car_number = driver.car_number;
             this.phone_number = driver.phone_number;
+            this.target = driver.target;
+            this.driving = driver.driving;
         }catch (event) {
             console.log('Update driver ERROR');
             throw UpdateErrorException("업데이트에 실패하였습니다.");

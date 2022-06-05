@@ -9,7 +9,7 @@ const Payment = {
         if (this.Pay_Working) // 결제 연타 방지
             return;
         const paid = Reserv.data.paid;
-        const result = await PayAPI(paid);
+        const result = await this.PayAPI(paid);
         if (!result){
             alert('결제에 실패하였습니다.');
             console.log('결제에 실패');
@@ -40,11 +40,12 @@ const Payment = {
         try{
             const ts = await agContract.methods.checkInTaxi().send({from : Session.auth.wallet_address, gas:'500000'});
             alert('체크인완료')
+            location.href = 'Driving.html';
         }catch (error){
             console.log(error);
             alert(error);
         }
-    }
+    },
 }
 // 1. 예약 정보로부터, 결제요금 받아오는 함수
 

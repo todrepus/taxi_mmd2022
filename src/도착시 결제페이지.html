@@ -12,6 +12,55 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
+
+    <script type='module' src="js/session.js"></script>
+    <script type='module' src="js/user.js"></script>
+    <script type='module' src="js/reserv.js"></script>
+    <script type='module' src="js/payment.js"></script>
+  
+    <!-- 블록체인 로그인 되어있는지 체크-->
+    <script>
+      window.onload = async() => {
+        if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+          if (Session.auth.userType == 'Client'){
+            try{ // 이미 가입되어있는 경우, 
+              await User.update(); // 유저정보 업데이트.
+            }catch (error){
+              Session.handleLogout();
+            }
+          }else if (Session.auth.userType == 'Driver'){
+            try{ // 이미 가입되어있는 경우,
+              await Driver.update();
+              location.href = 'index_driver.html';
+            }catch (error){
+              Session.handleLogout();
+            }
+          }
+
+          await Reserv.update();
+          await Driver.update(User.driver);
+
+          $('#start_point').text(Reserv.data.start_point);
+          $('#dest_point').text(Reserv.data.dest_point);
+          await User.update(Driver.target);
+          $('#driver_name').text(Driver.name);
+          $('#car_number').text(Driver.car_number);
+          $('#paid').text(Reserv.data.paid);
+          $('#paid2').text(Reserv.data.paid);
+
+          const start_date = new Date(Reserv.data.start * 1000);
+          const end_date = new Date(Reserv.data.end * 1000);
+          const f = function(date){
+              return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분 ${date.getSeconds()}초`;
+          }
+
+          document.getElementById('start_time').innerHTML = f(start_date);
+          document.getElementById('end_time').innerHTML = f(end_date);
+        }else{
+          location.href = 'index.html';
+        }
+      }
+    </script>
 </head>
 
   <body>
@@ -40,8 +89,8 @@
                                         <div>
                                           <h5 class="my-0" style="margin-bottom: 6px;"><strong>운행 정보</strong></h5>
 
-                                          <small class="text-muted">출발</small>  <span class="text-muted">$8</span><br>
-                                          <small class="text-muted">도착</small><br>
+                                          <small class="text-muted">출발</small>  <span class="text-muted" id='start_time'>$8</span><br>
+                                          <small class="text-muted">도착</small><span class="text-muted" id='end_time'>$8</span><br>
                                           <small class="text-muted">운행시간</small>
 
                                         </div>
@@ -51,23 +100,22 @@
                                       <li class="list-group-item d-flex justify-content-between lh-sm">
                                         <div>
                                           <h5 class="my-0" style="margin-bottom: 6px;"><strong>택시 정보</strong></h5>
-                                          <small class="text-muted">차량 번호</small><br>
-                                          <small class="text-muted">기사명</small>
+                                          <small class="text-muted">차량 번호</small><span class="text-muted" id='car_number'>$8</span><br>
+                                          <small class="text-muted">기사명</small><span class="text-muted" id='driver_name'>$8</span>
                                         </div>
-                                        <span class="text-muted">$8</span>
                                       </li>
                                       <li class="list-group-item d-flex justify-content-between lh-sm">
                                         <div>
                                           <h5 class="my-0" style="margin-bottom: 6px;"><strong>요금 정보</strong></h5>
                                           <small class="text-muted">운행 요금</small>
                                         </div>
-                                        <span class="text-muted">$5</span>
+                                        <span class="text-muted" id='paid'>$5</span>
                                       </li>
                                       <li class="list-group-item d-flex justify-content-between bg-light">
                                         <div class="text-success">
                                           <h5 class="my-0" style="margin-bottom: 6px;color:blue;"><strong>결제 금액</strong></h5>
                                         </div>
-                                        <span class="text-success">−$5</span>
+                                        <span class="text-success" id='paid2'>−$5</span>
                                       </li>
 
                                     </ul>
@@ -79,7 +127,7 @@
 
                               </div>
                             </div>
-                            <p><a class="btn btn-primary" href="index_client.html"> 결제하기</a> </p>
+                            <p><a class="btn btn-primary" onclick="Payment.Pay();"> 결제하기</a> </p>
                         </form>
                     </div>
                 </div>
@@ -88,6 +136,9 @@
         </div>
 
     </div>
-
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js"></script>
 </body>
 </html>

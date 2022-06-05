@@ -68,7 +68,7 @@ contract TaxiTxRx {
     mapping (address => Driver) public drivers; // 택시기사 목록
     mapping (address => Reservation[]) public user_reservs; // 사용자별 예약목록
 
-    address[] recent_addReserv_addrs; // 최근 예약요청을한 사용자들 목록
+    address[] public recent_addReserv_addrs; // 최근 예약요청을한 사용자들 목록
 
     constructor(){
         owner = msg.sender;
@@ -195,21 +195,26 @@ contract TaxiTxRx {
     // 요청목록 페이지네이션 [ 택시기사용 ]
     function fetchReserv(uint length, uint cursor) public view returns(Reservation[] memory, uint){
         uint offset = recent_addReserv_addrs.length;
-        uint start = offset - cursor - length;
+        uint start = 0;
         uint end = (offset - cursor);
 
-        if (start < 0){
-            length += start;
+        if (offset > cursor + length){
+            start = offset - cursor - length;
+        }else{
             start = 0;
         }
+
         
         Reservation[] memory reservs = new Reservation[](length);
         uint j = 0;
-        for (uint i=end-1; i>=start; i++){
-            reservs[j] = getLastReservation(recent_addReserv_addrs[i]);
+        for (uint i=end; i>start; i--){
+            reservs[j] = getLastReservation(recent_addReserv_addrs[i-1]);
             j++;
         }
-        return (reservs, cursor - length);
+        if (cursor >= length)
+            return (reservs, cursor - length);
+        else
+            return (reservs, 0);
     }
 
     // 기타 유틸함수

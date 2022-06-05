@@ -8,14 +8,16 @@ export const Reserv = {
         start : 0,
         end : 0,
         paid : 0,
+        driver : '',
         pay_completed : false,
         cancelled : false,
         start_point : '',
         dest_point : ''
     },
-    update: async function(){ // 예약정보 업데이트
+    update: async function(target=Session.auth.wallet_address){ // 예약정보 업데이트
         try{
-            const result = await agContract.methods.getLastReservation(Session.auth.wallet_address).call();
+            const result = await agContract.methods.getLastReservation(target).call();
+
             console.log(result);
             this.data.occur = result.occur;
             this.data.start = result.start;
@@ -25,6 +27,7 @@ export const Reserv = {
             this.data.cancelled = result.cancelled;
             this.data.start_point = result.start_point;
             this.data.dest_point = result.dest_point;
+            this.data.driver = result.driver;
         }catch (error){
             return false;
         }
@@ -85,6 +88,7 @@ export const Reserv = {
     },
 
     process : function(){
+        
         if (this.data.pay_completed){ // 결제가 모두 완료된경우
             alert('예약이 끝에 도달함');
             location.href = 'index_client.html' // 처음으로 돌아가
@@ -93,7 +97,8 @@ export const Reserv = {
             alert('도착완료')
             location.href = '도착시 결제페이지.html';
         }else if (this.data.start != 0){ // 운행중 (체크인)
-            document.getElementById('content_reserv').innerHTML = "운행중......";
+            alert('체크인완료');
+            //document.getElementById('content_reserv').innerHTML = "운행중......";
         }else if (this.data.cancelled){ // 취소인경우
             alert('취소')
             location.href = '예약 취소시 결제페이지.html'

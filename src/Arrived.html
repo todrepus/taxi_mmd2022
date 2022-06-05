@@ -16,7 +16,59 @@
     <link rel="stylesheet" href="css/Basic-Frame.css">
     <script src="js/modernizr-2.6.2.min.js"></script>
 
+	<script type='module' src="js/session.js"></script>
+    <script type='module' src="js/user.js"></script>
+    <script type='module' src='js/reserv.js'></script>
+    <script type='module' src="js/payment.js"></script>
 
+	<!-- 블록체인 로그인 되어있는지 체크-->
+	<script>
+		window.onload = async() => {
+			if(Session.auth.wallet_address){ // 지갑주소가 존재한다면,
+				if (Session.auth.userType == 'Client'){
+					try{ // 이미 가입되어있는 경우, 
+						await User.update(); // 유저정보 업데이트.
+						location.href = 'index_client.html';
+					}catch (error){
+						Session.handleLogout();
+					}
+				}else if (Session.auth.userType == 'Driver'){
+					try{ // 이미 가입되어있는 경우,
+						await Driver.update();
+					}catch (error){
+						Session.handleLogout();
+					}
+                }
+                if (!Driver.driving) {
+                    
+                    location.href = 'driver_request_list.html';
+                }
+
+                await Reserv.update(Driver.target);
+                if (Reserv.data.end != 0){
+                    alert('결제완료까지 대기할 페이지가 필요해요');
+                    location.href = 'index_driver.html';
+                }
+                $('#start_point').text(Reserv.data.start_point);
+                $('#dest_point').text(Reserv.data.dest_point);
+                await User.update(Driver.target);
+                $('#name').text(User.name);
+                $('#phone_number').text(User.phone_number);
+
+                const start_date = new Date(Reserv.data.start * 1000);
+                const end_date = new Date(Reserv.data.end * 1000);
+                const f = function(date){
+                    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분 ${date.getSeconds()}초`;
+                }
+
+                document.getElementById('start_time').innerHTML = f(start_date);
+                //document.getElementById('end_time').innerHTML = f(end_date);
+
+			}else{ 
+				location.href = 'index.html';
+			}
+		}
+    </script>
 </head>
 
 <body>
@@ -58,18 +110,19 @@
             <div class="">
                 <ul style="list-style: none; margin: 0; padding: 0;">
                     
-                    <li>손님 이름: XXX님</li>
-                    <li>전화번호: 010xxxxxxxx</li>
-                    <li>출발 위치: 서울특별시 광진구 능동로 209 세종대학교</li>
-                    <li>도착 위치: 서울특별시 종로구 새문안로 55</li>
-                    <li>출발 시간: 20XX년 05월 30일 12시 28분</li>
-                    <li>도착 시간: 20XX년 05월 30일 13시 40분</li>
+                    <li id='name'>손님 이름: XXX님</li>
+                    <li id='phone_number'>전화번호: 010xxxxxxxx</li>
+                    <li id='start_point'>출발 위치: 서울특별시 광진구 능동로 209 세종대학교</li>
+                    <li id='dest_point'>도착 위치: 서울특별시 종로구 새문안로 55</li>
+                    <li id='start_time'>출발 시간: 20XX년 05월 30일 12시 28분</li>
+                    <li id='end_time'>도착 시간: 20XX년 05월 30일 13시 40분</li>
                     <li>경과 시간: 1시간 12분</li>
-                    <li>지불 금액:&nbsp;XXXXX원&nbsp;
+                    <li>지불 금액:&nbsp;XXXXX원&nbsp;</li>
+                    <input type='number' id='paid'>
                 </ul>
             </div>
             <div class="button">
-                <button type="button" class="btn btn-lg btn-info" onclick="alert('손님에게 요금정보를 보냈습니다.')">결제 내역 발송</button>
+                <button type="button" class="btn btn-lg btn-info" onclick="(async()=>{alert('손님에게 요금정보를 보냈습니다.'); await Payment.SendPaid()})()">결제 내역 발송</button>
             </div>
         </div>
         <div class="gototop js-top">
